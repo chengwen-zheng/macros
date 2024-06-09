@@ -5,7 +5,16 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
+[lib]
+proc-macro = true
+
+
+[dev-dependencies]
 futures = "0.3.30"
 tokio = { version = "1.37.0", features = ["rt", "rt-multi-thread", "macros"] }
 anyhow = "1.0.81"
+
+[dependencies]
+proc-macro2 = "1.0.79"
+quote = "1.0.35"
+syn = { version = "2.0.57", features = ["extra-traits"] }
