@@ -11,6 +11,7 @@ pub fn enum_from(input: TokenStream) -> TokenStream {
     println!("{:#?}", input);
 
     let name = &input.ident;
+    let generics = &input.generics;
     let variants = match input.data {
         syn::Data::Enum(data) => data.variants,
         _ => panic!("EnumFrom can only be derived for enums"),
@@ -29,7 +30,8 @@ pub fn enum_from(input: TokenStream) -> TokenStream {
                     let field = fields.unnamed.first().expect("should have 1 field");
                     let ty = &field.ty;
                     quote! {
-                      impl From<#ty> for #name {
+                      // #ty is with the T generic type, so we don't need to use generics
+                      impl #generics From<#ty> for #name #generics {
                         fn from(v: #ty) -> Self {
                             #name::#variant_name(v)
                         }
